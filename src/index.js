@@ -12,10 +12,24 @@ const onClickAdd = () => {
   const p = document.createElement("p");
   p.innerText = inputText;
 
-  div.appendChild(p);
-  li.appendChild(div);
+  const completeButton = document.createElement("button");
+  completeButton.innerText = "完了";
+  completeButton.addEventListener("click", () => {
+    alert("完了");
+  });
 
-  console.log(li);
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "削除";
+  deleteButton.addEventListener("click", () => {
+    const deleteTarget = deleteButton.parentNode.parentNode;
+    document.getElementById("incomplete-list").removeChild(deleteTarget);
+  });
+
+  div.appendChild(p);
+  div.appendChild(completeButton);
+  div.appendChild(deleteButton);
+
+  li.appendChild(div);
 
   document.getElementById("incomplete-list").appendChild(li);
 };

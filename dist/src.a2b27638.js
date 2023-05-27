@@ -184,9 +184,21 @@ var onClickAdd = function onClickAdd() {
   div.className = "list-row";
   var p = document.createElement("p");
   p.innerText = inputText;
+  var completeButton = document.createElement("button");
+  completeButton.innerText = "完了";
+  completeButton.addEventListener("click", function () {
+    alert("完了");
+  });
+  var deleteButton = document.createElement("button");
+  deleteButton.innerText = "削除";
+  deleteButton.addEventListener("click", function () {
+    var deleteTarget = deleteButton.parentNode.parentNode;
+    document.getElementById("incomplete-list").removeChild(deleteTarget);
+  });
   div.appendChild(p);
+  div.appendChild(completeButton);
+  div.appendChild(deleteButton);
   li.appendChild(div);
-  console.log(li);
   document.getElementById("incomplete-list").appendChild(li);
 };
 document.getElementById("add-button").addEventListener("click", function () {
