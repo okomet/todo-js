@@ -179,14 +179,57 @@ require("./styles.css");
 var onClickAdd = function onClickAdd() {
   var inputText = document.getElementById("add-text").value;
   document.getElementById("add-text").value = "";
+  createIncompleteList(inputText);
+};
+var deleteFromIncompleteList = function deleteFromIncompleteList(target) {
+  document.getElementById("incomplete-list").removeChild(target);
+};
+var createIncompleteList = function createIncompleteList(text) {
   var li = document.createElement("li");
   var div = document.createElement("div");
   div.className = "list-row";
   var p = document.createElement("p");
-  p.innerText = inputText;
+  p.innerText = text;
+
+  // 完了ボタン押下処理
+  var completeButton = document.createElement("button");
+  completeButton.innerText = "完了";
+  completeButton.addEventListener("click", function () {
+    var addTarget = completeButton.parentNode.parentNode;
+    deleteFromIncompleteList(addTarget);
+    var text = addTarget.firstElementChild.firstElementChild.innerText;
+    addTarget.textContent = null;
+    var li = document.createElement("li");
+    var div = document.createElement("div");
+    div.className = "list-row";
+    var p = document.createElement("p");
+    p.innerText = text;
+
+    // 戻るボタン押下処理
+    var backButton = document.createElement("button");
+    backButton.innerText = "戻す";
+    backButton.addEventListener("click", function () {
+      var deleteTarget = backButton.parentNode.parentNode;
+      document.getElementById("complete-list").removeChild(deleteTarget);
+      var text = backButton.parentNode.firstElementChild.innerText;
+      createIncompleteList(text);
+    });
+    div.appendChild(p);
+    div.appendChild(backButton);
+    li.appendChild(div);
+    document.getElementById("complete-list").appendChild(li);
+  });
+
+  // 削除ボタン押下処理
+  var deleteButton = document.createElement("button");
+  deleteButton.innerText = "削除";
+  deleteButton.addEventListener("click", function () {
+    deleteFromIncompleteList(deleteButton.parentNode.parentNode);
+  });
   div.appendChild(p);
+  div.appendChild(completeButton);
+  div.appendChild(deleteButton);
   li.appendChild(div);
-  console.log(li);
   document.getElementById("incomplete-list").appendChild(li);
 };
 document.getElementById("add-button").addEventListener("click", function () {
